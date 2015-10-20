@@ -24,7 +24,17 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
+def getDecTreeAccuracy( **kwargs ):
+    from sklearn import tree
+    from sklearn.metrics import accuracy_score    
+    clf = tree.DecisionTreeClassifier( **kwargs )
+    clf = clf.fit(features_train, labels_train)
+    pred = clf.predict( features_test ) 
+    return accuracy_score( labels_test, pred )
 
+#accuracy = getDecTreeAccuracy( min_samples_split=50 )
+accuracy = getDecTreeAccuracy(min_samples_split=40)
+print accuracy
 
 #########################################################
 
