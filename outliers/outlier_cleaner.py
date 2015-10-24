@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import numpy
 
 def outlierCleaner(predictions, ages, net_worths):
     """
@@ -14,7 +15,11 @@ def outlierCleaner(predictions, ages, net_worths):
     cleaned_data = []
 
     ### your code goes here
-
+    errors = numpy.fabs(predictions - net_worths)
+    combined = numpy.hstack((ages, net_worths, errors))
+    combined = combined[combined[:,2].argsort()] # sort on 3rd column errors
+    
+    cleaned_data = [(combined[i][0], combined[i][1], combined[i][2]) for i in range(int(len(combined)*0.9))]
     
     return cleaned_data
 
