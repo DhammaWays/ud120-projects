@@ -15,8 +15,6 @@ sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
 
 
-
-
 def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature 1", f2_name="feature 2"):
     """ some plotting code designed to help you visualize your clusters """
 
@@ -48,11 +46,20 @@ data_dict.pop("TOTAL", 0)
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 poi  = "poi"
+#features_list = [poi, feature_1, feature_2, feature_3]
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
+# scale features from 0.0 to 1.0
+from sklearn import preprocessing
+scaler = preprocessing.MinMaxScaler() 
+finance_features = scaler.fit_transform(finance_features)
+
+test_f = numpy.array([[200000.0, 1000000.0]])
+print "Scaled value of ", test_f, "is", scaler.transform(test_f)
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
@@ -60,13 +67,15 @@ poi, finance_features = targetFeatureSplit( data )
 ### (as it's currently written, the line below assumes 2 features)
 for f1, f2 in finance_features:
     plt.scatter( f1, f2 )
+    
 plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
-
-
-
+from sklearn.cluster import KMeans
+k_means = KMeans(n_clusters=2)
+k_means.fit(finance_features)
+pred = k_means.predict(finance_features)
 
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
