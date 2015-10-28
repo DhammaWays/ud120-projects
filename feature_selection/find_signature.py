@@ -43,4 +43,9 @@ clf = DecisionTreeClassifier()
 clf.fit(features_train, labels_train )
 print "Decision Tree Accuracy with 150 point dataset:",clf.score(features_test, labels_test)
 
+imp_features = clf.feature_importances_
 
+print "Non-zero important features and their index:", imp_features[imp_features > 0.2], numpy.where(imp_features > 0.2)
+
+feature_names = vectorizer.get_feature_names()
+print "Most important feature name:", feature_names[numpy.where( imp_features == max(imp_features))[0][0]]
