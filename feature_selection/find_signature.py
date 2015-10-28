@@ -38,6 +38,9 @@ labels_train   = labels_train[:150]
 
 
 ### your code goes here
-
+from sklearn.tree import DecisionTreeClassifier
+clf = DecisionTreeClassifier()
+clf.fit(features_train, labels_train )
+print "Decision Tree Accuracy with 150 point dataset:",clf.score(features_test, labels_test)
 
 
