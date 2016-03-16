@@ -31,10 +31,36 @@ from tester import dump_classifier_and_data
 #features_list = ['poi','salary', "bonus", "shared_receipt_with_poi"  ] # You will need to use more features
 # Accuracy: 0.21125       Precision: 0.14368      Recall: 0.75250 F1: 0.24128 
 
-features_list = ['poi','salary', 'total_stock_value', "from_this_person_to_poi", "from_poi_to_this_person", "shared_receipt_with_poi"  ] # You will need to use more features
+#features_list = ['poi','salary', 'total_stock_value', "from_this_person_to_poi", "from_poi_to_this_person", "shared_receipt_with_poi"  ] # You will need to use more features
 # Accuracy: 0.60064       Precision: 0.15884      Recall: 0.41800 F1: 0.23021 
 # Total predictions:14000 True positives:836 False positives:4427 False negatives:1164 True negatives: 7573
 
+#features_list = ['poi','salary', 'total_stock_value', 'shared_receipt_with_poi', 'bonus', 'exercised_stock_options' ] # You will need to use more features
+#Accuracy: 0.79414       Precision: 0.29393      Recall: 0.31450 F1: 0.30386     F2: 0.31016
+#        Total predictions: 14000        True positives:  629    False positives: 1511   False negatives: 1371   True negatives: 10489
+
+#features_list = ['poi','salary', 'total_stock_value', 'shared_receipt_with_poi', 'bonus' ] # You will need to use more features
+# Accuracy: 0.79857       Precision: 0.30269      Recall: 0.31450 F1: 0.30848     F2: 0.31207
+# Total predictions: 14000        True positives:  629    False positives: 1449   False negatives: 1371   True negatives: 10551
+
+#features_list = ['poi','salary', 'total_stock_value', 'shared_receipt_with_poi', 'bonus', 'expenses', 'from_poi_to_this_person' ] # You will need to use more features
+#Accuracy: 0.80879       Precision: 0.35002      Recall: 0.39500 F1: 0.37115     F2: 0.38510
+#Total predictions: 14000        True positives:  790    False positives: 1467   False negatives: 1210   True negatives: 10533
+
+#features_list = ['poi','salary', 'total_stock_value', 'shared_receipt_with_poi', 'bonus', 'expenses', 'to_messages' ] # You will need to use more features
+#Accuracy: 0.81114       Precision: 0.35417      Recall: 0.39100 F1: 0.37167     F2: 0.38303
+#Total predictions: 14000        True positives:  782    False positives: 1426   False negatives: 1218   True negatives: 10574
+
+#features_list = ['poi','salary', 'total_stock_value', 'shared_receipt_with_poi', 'bonus', 'expenses', 'loan_advances' ] # You will need to use more features
+#Accuracy: 0.81493       Precision: 0.36501      Recall: 0.39950 F1: 0.38148     F2: 0.39209
+#Total predictions: 14000        True positives:  799    False positives: 1390   False negatives: 1201   True negatives: 10610
+
+#features_list = ['poi','salary', 'total_stock_value', 'shared_receipt_with_poi', 'bonus', 'expenses' ] # You will need to use more features
+#Accuracy: 0.81457       Precision: 0.36601      Recall: 0.40700 F1: 0.38542     F2: 0.39808
+#Total predictions: 14000        True positives:  814    False positives: 1410   False negatives: 1186   True negatives: 10590
+
+features_list = ['poi','salary', 'total_stock_value', 'shared_receipt_with_poi', 'bonus', 'expenses' ] # You will need to use more features
+        
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
@@ -70,14 +96,45 @@ labels, features = targetFeatureSplit(data)
 #from sklearn.ensemble import AdaBoostClassifier
 #clf = AdaBoostClassifier(n_estimators=20, learning_rate=2.0)
 #Accuracy: 0.62343       Precision: 0.14998      Recall: 0.35050 F1: 0.21007 
+#Accuracy: 0.75157       Precision: 0.26863      Recall: 0.42900 F1: 0.33038     F2: 0.38324
+#Total predictions: 14000        True positives:  858    False positives: 2336   False negatives: 1142   True negatives: 9664
+
+#from sklearn.ensemble import AdaBoostClassifier
+#from sklearn.metrics import accuracy_score
+#from sklearn.tree import DecisionTreeClassifier
+#clf = AdaBoostClassifier(
+#    DecisionTreeClassifier(max_depth=None, min_samples_split=1, random_state=0) )
+#Accuracy: 0.81579       Precision: 0.36787      Recall: 0.40300 F1: 0.38463     F2: 0.39545
+    
+#
+#from sklearn import tree  
+#clf = tree.DecisionTreeClassifier()
+# Accuracy: 0.78907       Precision: 0.22409      Recall: 0.19350 F1: 0.20767
+#Accuracy: 0.81750       Precision: 0.37369      Recall: 0.41050 F1: 0.39123     F2: 0.40257
+#Total predictions: 14000        True positives:  821    False positives: 1376   False negatives: 1179   True negatives: 10624
 
 from sklearn import tree  
-clf = tree.DecisionTreeClassifier()
-# Accuracy: 0.78907       Precision: 0.22409      Recall: 0.19350 F1: 0.20767
+#clf = tree.DecisionTreeClassifier(criterion="gini", max_features=None, max_depth=None, min_samples_split=1, random_state=0, splitter ="best")
+
+clf = tree.DecisionTreeClassifier(random_state=0)
+#Accuracy: 0.81779       Precision: 0.37684      Recall: 0.42150 F1: 0.39792     F2: 0.41174
+#Total predictions: 14000        True positives:  843    False positives: 1394   False negatives: 1157   True negatives: 10606
+
+#from sklearn.ensemble import RandomForestClassifier
+#clf = RandomForestClassifier(n_estimators=10, max_depth=None,
+#         min_samples_split=1, random_state=0)
+#Accuracy: 0.83693       Precision: 0.32290      Recall: 0.12900 F1: 0.18435     F2: 0.14661
 
 #from sklearn.svm import SVC
 #clf = SVC()
 # getting divide by zero error in SVC
+
+#from sklearn.ensemble import GradientBoostingClassifier
+#clf = GradientBoostingClassifier(n_estimators=100, learning_rate=1.0,
+ #      max_depth=1, random_state=0)
+#Accuracy: 0.82607       Precision: 0.35662      Recall: 0.27050 F1: 0.30765     F2: 0.28423
+#Total predictions: 14000        True positives:  541    False positives:  976   False negatives: 1459   True negatives: 11024
+
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall 
 ### using our testing script. Check the tester.py script in the final project
