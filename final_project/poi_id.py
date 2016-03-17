@@ -60,17 +60,34 @@ from tester import dump_classifier_and_data
 #Total predictions: 14000        True positives:  814    False positives: 1410   False negatives: 1186   True negatives: 10590
 
 features_list = ['poi','salary', 'total_stock_value', 'shared_receipt_with_poi', 'bonus', 'expenses' ] # You will need to use more features
+
         
 ### Load the dictionary containing the dataset
 with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
 ### Task 2: Remove outliers
+data_dict.pop( "TOTAL", 0 ) # remove entry TOTAL which is just a total from spreadsheet
+
+#for key in data_dict:
+#    if type(data_dict[key]['salary']) is str:
+        #print key, data_dict[key]['salary']
+
+# Filter out all those enteries where salary is not there      
+#data_dict = {k:data_dict[k] for k in data_dict if type(data_dict[k]['salary']) is int}
 
 
 ### Task 3: Create new feature(s)
+for key in data_dict:    
+    if (type(data_dict[key]['salary']) is int and type(data_dict[key]['bonus']) is int) and \
+       (data_dict[key]['salary'] + data_dict[key]['bonus'] >= 1000000):
+        data_dict[key]['high_worth'] = 1
+    else:
+        data_dict[key]['high_worth'] = 0
 
-
+features_list.append('high_worth')       
+        
+        
 ### Store to my_dataset for easy export below.
 my_dataset = data_dict
 
@@ -151,10 +168,10 @@ features_train, features_test, labels_train, labels_test = \
     train_test_split(features, labels, test_size=0.33, random_state=42)
     
 # PCA
-from sklearn.decomposition import RandomizedPCA
-pca = RandomizedPCA(n_components=2, whiten=True).fit(features_train)
-features_train = pca.transform(features_train)
-features_test = pca.transform(features_test)
+#from sklearn.decomposition import RandomizedPCA
+#pca = RandomizedPCA(n_components=2, whiten=True).fit(features_train)
+#features_train = pca.transform(features_train)
+#features_test = pca.transform(features_test)
 #print pca
 #print pca.explained_variance_ratio_,pca.components_, pca.mean_
 
@@ -166,7 +183,7 @@ clf = clf.fit(features_train, labels_train)
 pred = clf.predict( features_test ) 
 print "Test Data: Predicted number of poi ", len(pred[pred == 1.0]), "out of total persons", len(pred)
 print "Accuracy:", accuracy_score(labels_test, pred), "Precision:", precision_score(labels_test, pred), "Recall:", recall_score(labels_test, pred)
-
+print clf.feature_importances_
 
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
 ### check your results. You do not need to change anything below, but make sure
