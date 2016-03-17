@@ -66,6 +66,8 @@ with open("final_project_dataset.pkl", "r") as data_file:
     data_dict = pickle.load(data_file)
 
 ### Task 2: Remove outliers
+
+
 ### Task 3: Create new feature(s)
 
 
@@ -146,13 +148,25 @@ clf = tree.DecisionTreeClassifier(random_state=0)
 # Example starting point. Try investigating other evaluation techniques!
 from sklearn.cross_validation import train_test_split
 features_train, features_test, labels_train, labels_test = \
-    train_test_split(features, labels, test_size=0.3, random_state=42)
+    train_test_split(features, labels, test_size=0.33, random_state=42)
     
 # PCA
-#from sklearn.decomposition import RandomizedPCA
-#pca = RandomizedPCA(n_components=4, whiten=True).fit(features_train)
-#features_train = pca.transform(features_train)
-#features_test = pca.transform(features_test)
+from sklearn.decomposition import RandomizedPCA
+pca = RandomizedPCA(n_components=2, whiten=True).fit(features_train)
+features_train = pca.transform(features_train)
+features_test = pca.transform(features_test)
+#print pca
+#print pca.explained_variance_ratio_,pca.components_, pca.mean_
+
+
+#
+### Accuracy ###
+from sklearn.metrics import accuracy_score, precision_score, recall_score    
+clf = clf.fit(features_train, labels_train)
+pred = clf.predict( features_test ) 
+print "Test Data: Predicted number of poi ", len(pred[pred == 1.0]), "out of total persons", len(pred)
+print "Accuracy:", accuracy_score(labels_test, pred), "Precision:", precision_score(labels_test, pred), "Recall:", recall_score(labels_test, pred)
+
 
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
 ### check your results. You do not need to change anything below, but make sure
