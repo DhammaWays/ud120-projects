@@ -95,11 +95,6 @@ my_dataset = data_dict
 data = featureFormat(my_dataset, features_list, sort_keys = True)
 labels, features = targetFeatureSplit(data)
 
-# scale features to 0.0 to 1.0, no impact on decision tree classifiers
-#from sklearn import preprocessing
-#scaler = preprocessing.MinMaxScaler() 
-#features = scaler.fit_transform(features)
-
 ### Task 4: Try a varity of classifiers
 ### Please name your classifier clf for easy export below.
 ### Note that if you want to do PCA or other multi-stage operations,
@@ -140,10 +135,7 @@ labels, features = targetFeatureSplit(data)
 from sklearn import tree  
 #clf = tree.DecisionTreeClassifier(criterion="gini", max_features=None, max_depth=None, min_samples_split=1, random_state=0, splitter ="best")
 
-clf = tree.DecisionTreeClassifier(random_state=0, min_samples_split=4)
-#Accuracy: 0.869565217391 Precision: 0.285714285714 Recall: 0.666666666667
-#Accuracy: 0.81521       Precision: 0.34577      Recall: 0.32900 F1: 0.33718     F2: 0.33222
-#clf = tree.DecisionTreeClassifier(random_state=0)
+clf = tree.DecisionTreeClassifier(random_state=0)
 #Accuracy: 0.81779       Precision: 0.37684      Recall: 0.42150 F1: 0.39792     F2: 0.41174
 #Total predictions: 14000        True positives:  843    False positives: 1394   False negatives: 1157   True negatives: 10606
 
@@ -192,24 +184,6 @@ pred = clf.predict( features_test )
 print "Test Data: Predicted number of poi ", len(pred[pred == 1.0]), "out of total persons", len(pred)
 print "Accuracy:", accuracy_score(labels_test, pred), "Precision:", precision_score(labels_test, pred), "Recall:", recall_score(labels_test, pred)
 print clf.feature_importances_
-
-#from pandas import DataFrame
-#print DataFrame(clf.feature_importances_, columns = ["Imp"], index = features[1:]).sort(['Imp'], ascending = False).Imp
-
-from os import system
-
-tree.export_graphviz(clf, out_file='tree.dot')  
-
-#graph_from_dot_data(out.getvalue()).write_pdf("somefile.pdf")
-
-#system("pwd")
-#system("pydot -Tpng tree.dot -o tree.png")
-#from class_vis import prettyPicture, output_image
-#import matplotlib.pyplot as plt
-
-#prettyPicture(clf, features_test, labels_test)
-#plt.show()
-#output_image("test.png", "png", open("test.png", "rb").read())
 
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
 ### check your results. You do not need to change anything below, but make sure
