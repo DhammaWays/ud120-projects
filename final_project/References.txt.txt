@@ -1,0 +1,15 @@
+Lekhraj Sharma
+Data Analyst Nanodegree
+P5: Identify Fraud from Enron Email
+
+Here are list of references used during this project:
+
+1. http://scikit-learn.org/stable/index.html
+2. https://www.cs.cmu.edu/~./enron/
+3. https://en.wikipedia.org/wiki/Enron_scandal
+4. Udacity "Intro to Machine Learning" course
+5. https://docs.continuum.io/anaconda/index
+6. http://stackoverflow.com/
+7. https://en.wikipedia.org/wiki/Hyperparameter_optimization
+8. https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+9. http://machinelearningmastery.com/
